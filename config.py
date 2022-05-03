@@ -309,12 +309,11 @@ screens = [
     Screen(
         top=bar.Bar(
             [
-                # widget.CurrentLayout(),
                 widget.Sep(
                     linewidth=0,
                     padding=10
                 ),
-                widget.Image(filename="~/.config/qtile/Logo_Light.png", margin=2),
+                widget.Image(filename="~/.config/qtile/Logo_Light.png", margin=7),
                 widget.Sep(
                     linewidth=0,
                     padding=6
@@ -333,11 +332,8 @@ screens = [
                     linewidth=0,
                     padding=6
                 ),
+                widget.CurrentLayoutIcon(scale=0.5),
                 widget.Prompt(),
-                widget.Sep(
-                    linewidth=0,
-                    padding=6
-                ),
                 widget.WindowName(
                     empty_group_string="Hey, Samy! What are yah up to ?",
                     parse_text=parseWindowName
