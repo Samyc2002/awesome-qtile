@@ -112,7 +112,7 @@ keys = [
     Key([mod, "control"], 'q', lazy.run_extension(extension.CommandSet(
         commands={
             'Lock': 'xscreensaver-command -lock',
-            'Shut Down': 'shutdown',
+            'Shut Down': 'poweroff',
             'Restart': 'restart',
             'Log Out': 'loginctl terminate-user 1000',
             'Exit': '',
