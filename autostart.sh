@@ -8,6 +8,8 @@ flameshot &
 /usr/bin/matray --delay &
 mocp &
 xscreensaver -no-splash &
+klipper &
+emacs --daemon &
 # xsetroot -solid grey &
 # xset s off &
 # xset s noblank &

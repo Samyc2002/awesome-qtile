@@ -3,7 +3,7 @@ import os
 import subprocess
 
 from pygments import highlight
-from libqtile import hook
+from libqtile import hook, extension
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
 from libqtile import bar, layout, widget
@@ -83,11 +83,57 @@ keys = [
     Key([mod], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
     Key([mod, "shift"], "c", lazy.window.kill(), desc="Kill focused window"),
     Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
-    Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
-    Key([mod], "r", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
+    # Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
+    # Custom Extension Keybindnings
+    Key([mod], 'r', lazy.run_extension(extension.DmenuRun(
+        dmenu_prompt="$_",
+        dmenu_font="Poppins",
+        dmenu_lines=15,
+        dmenu_ignorecase=True,
+        background=colors["background"],
+        foreground=colors["foreground"],
+        selected_background=colors["selection"],
+        selected_foreground=colors["yellow"],
+        dmenu_height=20,  # Only supported by some dmenu forks
+    )), desc="Spawn a command using a prompt widget"),
+    Key([mod], 'w', lazy.run_extension(extension.WindowList(
+        dmenu_prompt="$_",
+        dmenu_font="Poppins",
+        dmenu_lines=15,
+        dmenu_ignorecase=True,
+        background=colors["background"],
+        foreground=colors["foreground"],
+        selected_background=colors["selection"],
+        selected_foreground=colors["yellow"],
+        fontsize=15,
+        item_format="{group}    {window}",
+        dmenu_height=20,  # Only supported by some dmenu forks
+    )), desc="Spawn a command using a prompt widget"),
+    Key([mod, "control"], 'q', lazy.run_extension(extension.CommandSet(
+        commands={
+            'Lock': 'xscreensaver-command -lock',
+            'Shut Down': 'shutdown',
+            'Restart': 'restart',
+            'Log Out': 'loginctl terminate-user 1000',
+            'Exit': '',
+        },
+        # pre_commands=[''],
+        dmenu_prompt="$_",
+        dmenu_font="Poppins",
+        dmenu_lines=15,
+        dmenu_ignorecase=True,
+        background=colors["background"],
+        foreground=colors["foreground"],
+        selected_background=colors["selection"],
+        selected_foreground=colors["yellow"],
+        fontsize=15,
+        item_format="{group}    {window}",
+        dmenu_height=20,  # Only supported by some dmenu forks
+    )), desc="To provide options for restart, shutdown, logout or lock the screen"),
     # Custom daemon shortcuts
     Key([mod], "l", lazy.spawn("xscreensaver-command -lock"), desc="Lock the Screen"),
-    Key([mod], "m", lazy.spawn("spotify"), desc="Spotify"),
+    Key([mod], "m", lazy.spawn("spotify"), desc="Launch Spotify"),
+    Key([mod, "shift"], "e", lazy.spawn("emacsclient -c -a 'emacs'"), desc="Launch doom emacs"),
     # Custom app shortcuts
     Key([mod], "e", lazy.spawn("pcmanfm"), desc="File Explorer")
 ]
@@ -346,6 +392,14 @@ screens = [
                 # ),
                 # widget.TextBox("default config", name="default"),
                 # widget.TextBox("Press &lt;M-r&gt; to spawn", foreground="#d75f5f"),
+                # widget.BatteryIcon(scale=3),
+                # widget.Moc(),
+                widget.OpenWeather(location="Kolkata", format="{icon}", fontsize=23),
+                widget.OpenWeather(location="Kolkata", format=" {weather_details} {temp}°{units_temperature}", fontsize=13),
+                widget.Sep(
+                    linewidth=0,
+                    padding=6
+                ),
                 widget.TextBox("&#xf274;", fontsize=23),
                 widget.Clock(
                     format="%A %wth %B  %I:%M %p"
