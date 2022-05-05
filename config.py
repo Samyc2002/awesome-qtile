@@ -12,6 +12,7 @@ from libqtile.config import Click, Drag, Group, Key, Match, Screen
 # UTILITY FUNCTIONS
 def env(name, default):
     return os.environ.get(name, default)
+
 def parseWindowName(name):
     nameParts = name.split("-")
     # initial = nameParts[0]
@@ -174,7 +175,7 @@ workspaces = [
         "name": "4",
         "matches": None,
         "exclusive": False,
-        "spawn": None,
+        "spawn": ["Alacritty"],
         "layout": None,
         "layouts": None,
         "persist": True,
@@ -232,7 +233,7 @@ workspaces = [
     }
 ]
 
-groups = [Group(i["name"], label=i["label"]) for i in workspaces]
+groups = [Group(i["name"], matches=i["matches"], exclusive=i["exclusive"], spawn=i["spawn"], layout=i["layout"], layouts=i["layouts"], persist=i["persist"], label=i["label"]) for i in workspaces]
 
 for i in groups:
     keys.extend(
@@ -435,6 +436,8 @@ mouse = [
 def autostart():
     script = os.path.expanduser('~/.config/qtile/autostart.sh') # STARTUP SCRIPT
     subprocess.run([script])
+    picom = os.path.expanduser('~/.config/picom/picom.sample.conf') # STARTUP SCRIPT
+    subprocess.run([picom])
 
 # MAKE DIALOGS FLOAT AUTOMATICALLY
 @hook.subscribe.client_new

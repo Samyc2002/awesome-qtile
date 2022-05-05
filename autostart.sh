@@ -10,6 +10,8 @@ mocp &
 xscreensaver -no-splash &
 klipper &
 emacs --daemon &
+# sleep 100 &&
+# picom --config ~/.config/picom/picom.sample.conf
 # xsetroot -solid grey &
 # xset s off &
 # xset s noblank &
