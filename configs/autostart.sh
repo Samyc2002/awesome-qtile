@@ -4,8 +4,8 @@ nm-applet &
 nitrogen --restore &
 blueman-applet &
 volumeicon &
-flameshot &
-/usr/bin/matray --delay &
+# flameshot &
+# /usr/bin/matray --delay &
 mocp &
 xscreensaver -no-splash &
 klipper &
